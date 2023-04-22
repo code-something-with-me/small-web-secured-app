@@ -14,7 +14,6 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @RequiredArgsConstructor
 public class ProjectConfig {
-    private final AuthenticationProviderService authenticationProviderService;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
@@ -27,7 +26,7 @@ public class ProjectConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationProviderService authenticationProviderService) throws Exception {
         return http.authenticationProvider(authenticationProviderService)
                 .authorizeHttpRequests(a -> a.anyRequest().authenticated())
                 .formLogin(flc -> flc.defaultSuccessUrl("/main", true))
